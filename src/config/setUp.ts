@@ -1,32 +1,34 @@
 import { ProjectRepository } from "../domain/ProjectRepository";
-import InMemoryProjectRepository from "../infrastructure/db/inMemory/inMemoryRepository";
+import { TypeORMProjectRepository } from "../infrastructure/db/typeOrm/TypeOrmRepository";
+import { AppDataSource } from "../infrastructure/db/typeOrm/datasources";
 import { ProjectEventPublisher } from "../infrastructure/events/ProjectEventPublisher";
 import { RabbitProjectEventPublisher } from "../infrastructure/events/RabbitProjectEventPublisher";
 
 class SetUp {
-    private static instance: SetUp;
-    private projectRepository: ProjectRepository;
-    private projectEventPublisher: ProjectEventPublisher;
+  private static instance: SetUp;
+  private projectRepository!: ProjectRepository;
+  private projectEventPublisher!: ProjectEventPublisher;
 
-    constructor() {
-        this.projectRepository = new InMemoryProjectRepository();
-        this.projectEventPublisher = new RabbitProjectEventPublisher();
-    }
+  private constructor() {}
 
-    public static getInstance(): SetUp {
-        if (!SetUp.instance) {
-            SetUp.instance = new SetUp();
-        }
-        return SetUp.instance;
+  public static async getInstance(): Promise<SetUp> {
+    if (!SetUp.instance) {
+      const instance = new SetUp();
+      await AppDataSource.initialize();
+      instance.projectRepository = new TypeORMProjectRepository();
+      instance.projectEventPublisher = new RabbitProjectEventPublisher();
+      SetUp.instance = instance;
     }
+    return SetUp.instance;
+  }
 
-    public getProjectRepository(): ProjectRepository {
-        return this.projectRepository;
-    }
+  public getProjectRepository(): ProjectRepository {
+    return this.projectRepository;
+  }
 
-    public getProjectEventPublisher(): ProjectEventPublisher {
-        return this.projectEventPublisher;
-    }
+  public getProjectEventPublisher(): ProjectEventPublisher {
+    return this.projectEventPublisher;
+  }
 }
 
 export default SetUp;
