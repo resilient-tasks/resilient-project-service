@@ -1,0 +1,33 @@
+{
+  "name": "resilient-project-service",
+  "version": "1.0.0",
+  "description": "project-service/\r ├── src/\r │   ├── application/              # Casos de uso / lógica de aplicación\r │   │   ├── usecases/\r │   │   │   ├── createProject.ts\r │   │   │   ├── getProjects.ts\r │   │   │   ├── getProjectById.ts\r │   │   │   ├── deleteProject.ts\r │   │   │   └── updateProject.ts\r │   │   └── services/             # Reglas de negocio compartidas (si aplica)\r │\r │   ├── domain/                   # Entidades y reglas del dominio\r │   │   ├── Project.ts\r │   │   └── ProjectRepository.ts  # Interface de repositorio\r │\r │   ├── infrastructure/\r │   │   ├── db/\r │   │   │   ├── mongoose/         # Adaptador para MongoDB\r │   │   │   │   ├── models/       # Schemas de mongoose\r │   │   │   │   │   └── ProjectModel.ts\r │   │   │   │   └── ProjectMapper.ts\r │   │   │   └── ProjectRepositoryImpl.ts\r │   │   ├── events/               # Publicadores de eventos (ej: ProjectDeleted)\r │   │   │   └── ProjectEventPublisher.ts\r │   │   └── http/                 # Adaptadores de Express\r │   │       ├── controllers/\r │   │       │   └── projectController.ts\r │   │       ├── routes/\r │   │       │   └── projectRoutes.ts\r │   │       └── middlewares/\r │   │           └── authenticateJWT.ts\r │\r │   ├── config/                   # Variables de entorno y configuración\r │   │   └── index.ts\r │\r │   ├── index.ts                  # Punto de entrada (servidor Express)\r │\r ├── .env\r ├── Dockerfile\r ├── docker-compose.yml           # Opcional si corre con Mongo u otros deps\r ├── tsconfig.json\r ├── package.json\r └── README.md",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.0",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.25",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.1.0",
+    "@types/uuid": "^10.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
