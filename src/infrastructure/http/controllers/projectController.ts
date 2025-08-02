@@ -9,6 +9,7 @@ import { deleteProject } from '../../../application/usecases/deleteProject';
 import { ProjectEventPublisher } from '../../events/ProjectEventPublisher';
 import { UpdateProjectDto } from '../../../application/dtos/updateProjectDto';
 import { updateProject } from '../../../application/usecases/updateProject';
+import { getProjects } from '../../../application/usecases/getProjects';
 
 export class ProjectController {
     constructor(private projectRepository: ProjectRepository, private projectEventPublisher: ProjectEventPublisher) {}
@@ -28,7 +29,9 @@ export class ProjectController {
     }
 
     public async getProjects (req: Request, res: Response) : Promise<void> {
-        res.send('Hello World');
+        Validations.requierdFields(req.user!.sub, 'ownerId');
+        const projects = await getProjects(this.projectRepository, req.user!.sub);
+        res.status(200).json(projects);
     }
 
     public async getProjectById (req: Request, res: Response) : Promise<void> {

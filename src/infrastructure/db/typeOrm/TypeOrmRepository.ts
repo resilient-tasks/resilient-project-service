@@ -36,4 +36,9 @@ export class TypeORMProjectRepository implements ProjectRepository {
   async delete(id: string): Promise<void> {
     await this.ormRepo.delete(id);
   }
+
+  async findByOwnerId(ownerId: string): Promise<Project[]> {
+    const entities = await this.ormRepo.find({ where: { ownerId } });
+    return entities.map(ProjectMapper.toDomain);
+  }
 }

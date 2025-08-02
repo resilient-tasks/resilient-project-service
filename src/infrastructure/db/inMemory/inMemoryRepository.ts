@@ -26,6 +26,10 @@ class InMemoryProjectRepository implements ProjectRepository {
     async delete(id: string): Promise<void> {
         this.projects = this.projects.filter(project => project.id !== id);
     }
+
+    async findByOwnerId(ownerId: string): Promise<Project[]> {
+        return this.projects.filter(project => project.ownerId === ownerId);
+    }
 }
 
 export default InMemoryProjectRepository;

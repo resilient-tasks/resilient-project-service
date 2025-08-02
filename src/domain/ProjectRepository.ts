@@ -6,4 +6,5 @@ export interface ProjectRepository {
     findById(id: string): Promise<Project | null>;
     update(project: Project): Promise<void>;
     delete(id: string): Promise<void>;
+    findByOwnerId(ownerId: string): Promise<Project[]>;
 }
