@@ -7,7 +7,7 @@ declare global {
       user?: {
         sub: string;
         email: string;
-        role?: string;
+        role: string;
       };
     }
   }
@@ -62,14 +62,12 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
       return;
     }
 
-    // Verify the token
     const decoded = jwt.verify(token, jwtSecret) as JWTPayload;
     
-    // Add user information to the request object
     req.user = {
       sub: decoded.sub,
       email: decoded.email,
-      role: decoded.role
+      role: decoded.role || 'basic'
     };
 
     next();

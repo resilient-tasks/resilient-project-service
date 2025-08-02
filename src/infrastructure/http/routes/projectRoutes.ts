@@ -3,10 +3,11 @@ import { Router } from 'express';
 import { ProjectController } from '../controllers/projectController';
 import { authenticateJWT } from '../middlewares/authenticateJWT';
 import { ProjectRepository } from '../../../domain/ProjectRepository';
+import { ProjectEventPublisher } from '../../events/ProjectEventPublisher';
 
-const projectRouter = (projectRepository: ProjectRepository): Router => {
+const projectRouter = (projectRepository: ProjectRepository, projectEventPublisher: ProjectEventPublisher): Router => {
   const router = Router();
-  const projectController = new ProjectController(projectRepository);
+  const projectController = new ProjectController(projectRepository, projectEventPublisher);
 
   router.use(authenticateJWT);
 

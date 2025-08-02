@@ -21,23 +21,9 @@ export class UnauthorizedException extends HttpException {
     }
 }
 
-export class UserAlreadyExistsError extends HttpException {
-    constructor(message: string) {
-        super(`${message}`, 409);
-        this.name = 'UserAlreadyExistsError';
-    }
-}
-
 export class ForbiddenException extends HttpException {
     constructor(message: string = 'Forbidden') {
       super(message, 403);
-    }
-}
-
-export class UserNotFoundError extends HttpException {
-    constructor(message: string) {
-      super(message, 404);
-      this.name = 'UserNotFoundError';
     }
 }
 

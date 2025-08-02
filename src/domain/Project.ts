@@ -22,6 +22,17 @@ export class Project {
     setUpdatedAt(updatedAt: Date) {
         this.updatedAt = updatedAt;
     }
+
+    update(name?: string, description?: string) {
+        if (name) {
+            this.name = name;
+            this.updatedAt = new Date();
+        }
+        if (description) {
+            this.description = description;
+            this.updatedAt = new Date();
+        }
+    }
 }
 
 export default Project;
